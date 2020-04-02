@@ -53,6 +53,14 @@ const styleValidation = data => {
   return Joi.validate(data, schema);
 };
 
+const partnerValidation = data => {
+  const schema = {
+    name: Joi.string().required(),
+    logo: Joi.string().required()
+  };
+  return Joi.validate(data, schema);
+};
+
 const careerValidation = data => {
   const schema = {
     title: Joi.string().required(),
@@ -111,3 +119,4 @@ module.exports.branchValidation = branchValidation;
 module.exports.careerValidation = careerValidation;
 module.exports.newsValidation = newsValidation;
 module.exports.categoryValidation = categoryValidation;
+module.exports.partnerValidation = partnerValidation;

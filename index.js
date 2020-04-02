@@ -5,6 +5,7 @@ const authRoute = require("./routes/auth");
 const branchRoute = require("./routes/branch");
 const careerRoute = require("./routes/career");
 const categoryRoute = require("./routes/category");
+const partnerRoute = require("./routes/partner");
 const employeeRoute = require("./routes/employee");
 const newsRoute = require("./routes/news");
 const projectRoute = require("./routes/project");
@@ -86,6 +87,7 @@ app.use(cors());
 
 //Route middlewares
 app.use("/api/user", authRoute);
+app.use("/api/partner", partnerRoute);
 app.use("/api/branch", branchRoute);
 app.use("/api/career", careerRoute);
 app.use("/api/category", categoryRoute);
