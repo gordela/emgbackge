@@ -114,10 +114,10 @@ app.post("/upload", (req, res) => {
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(app);
-httpServer.listen(80, () => {
+httpServer.listen(process.env.PORT, () => {
   console.log("HTTP Server running on port 80");
 });
 
-httpsServer.listen(443, () => {
-  console.log("HTTPS Server running on port 443");
-});
+// httpsServer.listen(443, () => {
+//   console.log("HTTPS Server running on port 443");
+// });
