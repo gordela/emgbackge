@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoute = require("./routes/auth");
@@ -20,25 +21,9 @@ const https = require("https");
 
 const app = express();
 app.set("view engine", "ejs");
-// const privateKey = fs.readFileSync(
-//   "/etc/letsencrypt/live/gapi.website/privkey.pem",
-//   "utf8"
-// );
-// const certificate = fs.readFileSync(
-//   "/etc/letsencrypt/live/gapi.website/cert.pem",
-//   "utf8"
-// );
-// const ca = fs.readFileSync(
-//   "/etc/letsencrypt/live/gapi.website/chain.pem",
-//   "utf8"
-// );
-// const credentials = {
-//   key: privateKey,
-//   cert: certificate,
-//   ca: ca
-// };
 //Public Folder
 app.use(express.static("./public"));
+app.use(fileUpload());
 
 //File uPload
 const storage = multer.diskStorage({
@@ -114,12 +99,25 @@ app.post("/upload", (req, res) => {
   });
 });
 
+app.post("/picture", (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No file uploaded" });
+  }
+
+  const file = req.files.file;
+
+  file.mv(`${__dirname}/public/uploads/${file.name}`, err => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+  });
+});
+
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(app);
 httpServer.listen(process.env.PORT, () => {
   console.log("HTTP Server running on port 80");
 });
-
-// httpsServer.listen(443, () => {
-//   console.log("HTTPS Server running on port 443");
-// });
