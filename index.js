@@ -6,6 +6,7 @@ const branchRoute = require("./routes/branch");
 const careerRoute = require("./routes/career");
 const categoryRoute = require("./routes/category");
 const partnerRoute = require("./routes/partner");
+const searchRoute = require("./routes/search");
 const employeeRoute = require("./routes/employee");
 const newsRoute = require("./routes/news");
 const projectRoute = require("./routes/project");
@@ -73,6 +74,7 @@ app.use("/api/category", categoryRoute);
 app.use("/api/employee", employeeRoute);
 app.use("/api/news", newsRoute);
 app.use("/api/project", projectRoute);
+app.use("/api/search", searchRoute);
 app.get("/", (req, res) => {
   res.render("index");
 });
