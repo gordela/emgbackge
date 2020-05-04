@@ -211,26 +211,6 @@ app.use("/api/employee", employeeRoute);
 app.use("/api/news", newsRoute);
 app.use("/api/project", projectRoute);
 app.use("/api/search", searchRoute);
-app.get("/", (req, res) => {
-  res.render("index");
-});
-app.post("/upload", (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.render("index", { msg: err });
-    } else {
-      if (req.file == undefined) {
-        console.log(req);
-        res.render("index", { msg: "Error: no file selected!" });
-      } else {
-        res.render("index", {
-          msg: "File Uploaded!",
-          file: `uploads/${req.file.filename}`,
-        });
-      }
-    }
-  });
-});
 
 const httpServer = http.createServer(app);
 
