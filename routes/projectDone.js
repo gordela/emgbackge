@@ -1,13 +1,12 @@
-const Project = require("../models/Project");
-const Category = require("../models/Category");
+const Project = require("../models/ProjectDone");
 const router = require("express").Router();
-const { projectValidation, categoryValidation } = require("../validation");
+const { projectValidation } = require("../validation");
 const verify = require("./verifyToken");
 const validateObjectId = require("../validateObjectId");
 const admin = require("./admin");
 
 router.get("/", (req, res) => {
-  Project.find((err, projects) => res.send(projects));
+  Project.find((err, project) => res.send(project));
 });
 
 router.get("/category/:id", async (req, res) => {
@@ -16,13 +15,13 @@ router.get("/category/:id", async (req, res) => {
   if (!category) return res.status(400).send("Invalid category.");
   const categoryFiltered = {
     _id: String(category._id),
-    name: category.name
+    name: category.name,
   };
   console.log(categoryFiltered);
 
   Project.find({
-    category: categoryFiltered
-  }).exec(function(err, user) {
+    category: categoryFiltered,
+  }).exec(function (err, user) {
     if (err) console.log("Error: " + JSON.stringify(err));
     else if (user) res.send(JSON.stringify(user));
   });
@@ -32,48 +31,52 @@ router.post("/", [verify, admin], async (req, res) => {
   const { error } = projectValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const category = await Category.findById(req.body.categoryId);
-  if (!category) return res.status(400).send("Invalid category.");
-
   const project = new Project({
     publishDate: Date.now(),
     title: req.body.title,
-    category: { _id: category._id, name: category.name },
     client: req.body.client,
     duration: req.body.duration,
-    fbLink: req.body.fbLink,
-    twLink: req.body.twLink,
     longDesc: req.body.longDesc,
     shortDesc: req.body.shortDesc,
+    shortImage: req.body.shortImage,
     longImage: req.body.longImage,
-    shortImage: req.body.shortImage
+    location: req.body.location,
+    serviceType: req.body.serviceType,
+    contractType: req.body.contractType,
+    customer: req.body.customer,
+    generalContractor: req.body.generalContractor,
+    financing: req.body.financing,
+    price: req.body.price,
+    partner: req.body.partner,
   });
+
   await project.save();
 
   res.send(project);
 });
-
 router.put("/:id", [validateObjectId, verify, admin], async (req, res) => {
   const { error } = projectValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-
-  const category = await Category.findById(req.body.categoryId);
-  if (!category) return res.status(400).send("Invalid category.");
 
   const project = await Project.findByIdAndRemove(req.params.id);
 
   const newProject = new Project({
     publishDate: Date.now(),
     title: req.body.title,
-    category: { _id: category._id, name: category.name },
     client: req.body.client,
     duration: req.body.duration,
-    fbLink: req.body.fbLink,
-    twLink: req.body.twLink,
     longDesc: req.body.longDesc,
     shortDesc: req.body.shortDesc,
+    shortImage: req.body.shortImage,
     longImage: req.body.longImage,
-    shortImage: req.body.shortImage
+    location: req.body.location,
+    serviceType: req.body.serviceType,
+    contractType: req.body.contractType,
+    customer: req.body.customer,
+    generalContractor: req.body.generalContractor,
+    financing: req.body.financing,
+    price: req.body.price,
+    partner: req.body.partner,
   });
 
   await newProject.save();
