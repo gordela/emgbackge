@@ -20,6 +20,8 @@ const http = require("http");
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
 const methodOverride = require("method-override");
+const verify = require("./routes/verifyToken");
+const admin = require("./routes/admin");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -88,7 +90,7 @@ app.get("/", (req, res) => {
 });
 // @route POST /upload
 // @desc  Uploads file to DB
-app.post("/api/upload", upload.single("file"), (req, res) => {
+app.post("/api/upload", [upload.single("file"), verify, admin], (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
