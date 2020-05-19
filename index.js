@@ -5,7 +5,9 @@ const bodyParser = require("body-parser");
 const authRoute = require("./routes/auth");
 const branchRoute = require("./routes/branch");
 const crypto = require("crypto");
+const subscribeRoute = require("./routes/subscribe");
 const careerRoute = require("./routes/career");
+const contactRoute = require("./routes/contact");
 const partnerRoute = require("./routes/partner");
 const employeeRoute = require("./routes/employee");
 const newsRoute = require("./routes/news");
@@ -178,11 +180,13 @@ app.use(cors());
 
 //Route middlewares
 app.use("/api/user", authRoute);
+app.use("/api/contact", contactRoute);
 app.use("/api/partner", partnerRoute);
 app.use("/api/branch", branchRoute);
 app.use("/api/career", careerRoute);
 app.use("/api/employee", employeeRoute);
 app.use("/api/news", newsRoute);
+app.use("/api/subscribe", subscribeRoute);
 app.use("/api/projectDone", projectDoneRoute);
 app.use("/api/projectOngoing", projectOngoingRoute);
 

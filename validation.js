@@ -64,6 +64,13 @@ const careerValidation = (data) => {
   return Joi.validate(data, schema);
 };
 
+const subscribeValidation = (data) => {
+  const schema = {
+    email: Joi.string().email({ minDomainSegments: 2 }).required(),
+  };
+  return Joi.validate(data, schema);
+};
+
 const newsValidation = (data) => {
   const schema = {
     title: Joi.string().required(),
@@ -103,6 +110,15 @@ const categoryValidation = (data) => {
   return Joi.validate(data, schema);
 };
 
+const contactValidation = (data) => {
+  const schema = {
+    name: Joi.string().required(),
+    email: Joi.string().email({ minDomainSegments: 2 }).required(),
+    letter: Joi.string().required(),
+  };
+  return Joi.validate(data, schema);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.employeeValidation = employeeValidation;
 module.exports.loginValidation = loginValidation;
@@ -113,3 +129,5 @@ module.exports.careerValidation = careerValidation;
 module.exports.newsValidation = newsValidation;
 module.exports.categoryValidation = categoryValidation;
 module.exports.partnerValidation = partnerValidation;
+module.exports.subscribeValidation = subscribeValidation;
+module.exports.contactValidation = contactValidation;

@@ -15,7 +15,9 @@ router.post("/", [verify, admin], async (req, res) => {
 
   const partner = new Partner({
     name: req.body.name,
-    logo: req.body.logo
+    logo: req.body.logo,
+    description: req.body.description,
+    link: req.body.link,
   });
 
   await partner.save();
@@ -31,7 +33,9 @@ router.put("/:id", [validateObjectId, verify, admin], async (req, res) => {
 
   const newPartner = new Partner({
     logo: req.body.logo,
-    name: req.body.name
+    name: req.body.name,
+    description: req.body.description,
+    link: req.body.link,
   });
 
   await newPartner.save();
