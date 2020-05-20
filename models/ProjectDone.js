@@ -18,5 +18,6 @@ const projectDoneSchema = new Schema({
   financing: String,
   price: String,
   partner: String,
+  publishDate: Date,
 });
 module.exports = mongoose.model("ProjectDone", projectDoneSchema);

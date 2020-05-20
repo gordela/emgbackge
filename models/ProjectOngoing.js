@@ -18,5 +18,6 @@ const projectOngoingSchema = new Schema({
   financing: String,
   price: String,
   partner: String,
+  publishDate: Date,
 });
 module.exports = mongoose.model("ProjectOngoing", projectOngoingSchema);
