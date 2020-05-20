@@ -32,9 +32,14 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 dotenv.config();
-
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () =>
+  console.log("connected to db")
+);
+mongoose.set("useUnifiedTopology", true);
 const mongoURI = process.env.DB_CONNECT;
-const conn = mongoose.createConnection(mongoURI);
+const conn = mongoose.createConnection(mongoURI, {
+  useNewUrlParser: true,
+});
 //Connect to DB
 
 let gfs;
@@ -172,9 +177,6 @@ app.delete("/files/:id", (req, res) => {
   });
 });
 
-mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () =>
-  console.log("connected to db")
-);
 mongoose.set("useFindAndModify", false);
 
 app.use(express.json());
