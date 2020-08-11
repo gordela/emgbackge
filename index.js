@@ -95,7 +95,7 @@ app.get("/", (req, res) => {
 });
 // @route POST /upload
 // @desc  Uploads file to DB
-app.post("/api/upload", [upload.single("file"), verify, admin], (req, res) => {
+app.post("/api/upload", [upload.single("file")], (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
