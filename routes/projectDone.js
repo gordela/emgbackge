@@ -9,24 +9,6 @@ router.get("/", (req, res) => {
   Project.find((err, project) => res.send(project));
 });
 
-router.get("/category/:id", async (req, res) => {
-  console.log(req.params.id);
-  const category = await Category.findById(req.params.id);
-  if (!category) return res.status(400).send("Invalid category.");
-  const categoryFiltered = {
-    _id: String(category._id),
-    name: category.name,
-  };
-  console.log(categoryFiltered);
-
-  Project.find({
-    category: categoryFiltered,
-  }).exec(function (err, user) {
-    if (err) console.log("Error: " + JSON.stringify(err));
-    else if (user) res.send(JSON.stringify(user));
-  });
-});
-
 router.post("/", [verify, admin], async (req, res) => {
   const { error } = projectValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
